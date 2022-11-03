@@ -8,17 +8,21 @@ public class CarnivoreSpawner : MonoBehaviour
     [SerializeField] private GameObject objectToBeSpawned;
     [SerializeField] int offspringRate;
     [SerializeField] Transform parent;
+    public GameObject[] aliveCarnivore;
 
     public float time = 0;
     public float spawnRate = 8;
-    public static int carnivorePopulation = 1;
+    public static int carnivoreStartPopulation = 1;
+    public int currCarnivorePopulation;
     public float existenceTime = 0;
+    public static float carnivorePoints = 0f;
+    public float checkPoint;
 
     public bool extinct = false;
 
     void Start()
     {
-        for (int i = 0; i < carnivorePopulation; i++)
+        for (int i = 0; i < carnivoreStartPopulation; i++)
         {
             Vector3 position = new Vector3(Random.Range(-50f, 50f), 0, Random.Range(-50f, 50f));
             Vector3 rotation = new Vector3(0, Random.Range(0f, 360f), 0);
@@ -30,13 +34,16 @@ public class CarnivoreSpawner : MonoBehaviour
     void Update()
     {
         time += Time.deltaTime;
+        checkPoint += Time.deltaTime;
 
-        
-        /*
-        if (carnivorePopulation >= 1)
+        aliveCarnivore = GameObject.FindGameObjectsWithTag("Carnivore");
+        currCarnivorePopulation = aliveCarnivore.Length;
+
+        if (currCarnivorePopulation <= 10)
         {
-            if (time >= spawnRate)
+            if (Carnivore.baby == true)
             {
+                offspringRate = Random.Range(1, 2);
 
                 for (int i = 0; i < offspringRate; i++)
                 {
@@ -46,25 +53,24 @@ public class CarnivoreSpawner : MonoBehaviour
                     Instantiate(objectToBeSpawned, position, Quaternion.Euler(rotation), parent);
                 }
 
-
-
-                carnivorePopulation += offspringRate;
-
-
-
-                time = 0;
+                Carnivore.baby = false;
             }
         }
-        */
 
-        if (carnivorePopulation > 0)
+        if (currCarnivorePopulation > 0)
         {
             existenceTime += Time.deltaTime;
         }
-        if (carnivorePopulation <= 0 && extinct == false)
+        if (currCarnivorePopulation <= 0 && extinct == false)
         {
             Debug.Log("Carnivores went extinct after " + existenceTime + "Seconds");
             extinct = true;
+        }
+
+        if (checkPoint >= 10)
+        {
+            Debug.Log(carnivorePoints + " Carnivore Points from " + currCarnivorePopulation + " Carnivores at " + time + " Seconds");
+            checkPoint = 0;
         }
     }
 

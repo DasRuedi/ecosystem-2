@@ -13,15 +13,13 @@ public class Herbivore : MonoBehaviour
     public float moveSpeed = 1f;
     public float reorientationTime = 0;
     public float reproductionTime = 0;
-    public int offSpringRate = 0;
-
-    [SerializeField] private GameObject objectToBeSpawned;
 
 
     public GameObject CurrentTarget = null;
 
     public bool hungry = false;
     public bool adult = false;
+    public static bool baby = false;
 
 
     void Awake()
@@ -31,7 +29,6 @@ public class Herbivore : MonoBehaviour
 
     void Start()
     {
-        HerbivoreSpawner.herbivorePopulation++;
 
     }
 
@@ -43,7 +40,7 @@ public class Herbivore : MonoBehaviour
         hunger += Time.deltaTime * 3f;
         reproductionTime += Time.deltaTime;
 
-        
+        HerbivoreSpawner.herbivorePoints += Time.deltaTime * 0.1f;
 
 
         if (hunger >= hungerThreshold)
@@ -83,8 +80,6 @@ public class Herbivore : MonoBehaviour
         if (lifeSpan >= lifeExpect || hunger >= starveThreshold)
         {
             Destroy(gameObject);
-            HerbivoreSpawner.herbivorePopulation --;
-            //Debug.Log("herbivore died. new population: " + HerbivoreSpawner.herbivorePopulation);
         }
 
 
@@ -100,13 +95,8 @@ public class Herbivore : MonoBehaviour
 
         if (adult == true && hungry == false && reproductionTime >= 23)
         {
-            offSpringRate = Random.Range(1, 5);
-
-            for (int i = 0; i < offSpringRate; i++)
-            {
-                Invoke("SpawnBaby", 0f);
-                reproductionTime = 0f;
-            }
+            baby = true;
+            reproductionTime = 0f;
         }
         else
         {
@@ -160,16 +150,5 @@ public class Herbivore : MonoBehaviour
                 //Debug.Log("Plant died. new population: " + PlantSpawner.plantPopulation);
             }
         }
-    }
-
-    public void SpawnBaby()
-    {
-        Vector3 position = new Vector3(transform.position.x, 0, transform.position.z);
-        Vector3 rotation = new Vector3(0, Random.Range(0f, 360f), 0);
-
-        GameObject baby = Instantiate(objectToBeSpawned, position, Quaternion.Euler(rotation));
-        baby.GetComponent<Herbivore>().adult = false;
-        baby.GetComponent<Herbivore>().lifeSpan = 0;
-
     }
 }

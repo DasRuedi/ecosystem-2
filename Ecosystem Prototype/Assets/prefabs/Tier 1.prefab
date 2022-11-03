@@ -204,6 +204,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   lifeExpect: 120
+  maxLifeExpect: 200
   lifeSpan: 0
   hunger: 0
   hungerThreshold: 30
@@ -213,9 +214,9 @@ MonoBehaviour:
   reproductionTime: 0
   offSpringRate: 0
   objectToBeSpawned: {fileID: 2904981331783616868}
-  parent: {fileID: 0}
   CurrentTarget: {fileID: 0}
   hungry: 0
+  adult: 0
 --- !u!54 &2543550258873378438
 Rigidbody:
   m_ObjectHideFlags: 0
@@ -451,7 +452,7 @@ GameObject:
   - component: {fileID: 293862512448200967}
   m_Layer: 0
   m_Name: HerbivoreRange
-  m_TagString: Herbivore
+  m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0

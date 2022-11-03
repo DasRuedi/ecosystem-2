@@ -1569,7 +1569,7 @@ GameObject:
   - component: {fileID: 1268891343240432614}
   m_Layer: 0
   m_Name: Carnivore
-  m_TagString: Untagged
+  m_TagString: Carnivore
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -1718,9 +1718,7 @@ MonoBehaviour:
   reproductionTime: 0
   hungerThreshold: 30
   starveThreshold: 100
-  offSpringRate: 0
   CurrentTarget: {fileID: 0}
-  objectToBeSpawned: {fileID: 3888235745465953124}
   hungry: 0
   adult: 0
 --- !u!54 &1268891343240432614
@@ -2624,7 +2622,7 @@ GameObject:
   - component: {fileID: 1493458861609866197}
   m_Layer: 0
   m_Name: Carnivore Range
-  m_TagString: Carnivore
+  m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0

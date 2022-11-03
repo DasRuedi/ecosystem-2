@@ -13,20 +13,18 @@ public class Carnivore : MonoBehaviour
     public float reproductionTime = 0;
     public float hungerThreshold = 20;
     public float starveThreshold = 100;
-    public int offSpringRate = 0;
 
     public GameObject CurrentTarget = null;
 
-    [SerializeField] private GameObject objectToBeSpawned;
-
     public bool hungry = false;
     public bool adult = false;
+    public static bool baby = false;
 
 
 
     void Start()
     {
-        CarnivoreSpawner.carnivorePopulation++;
+
     }
 
     
@@ -37,6 +35,7 @@ public class Carnivore : MonoBehaviour
         hunger += Time.deltaTime * 1.5f;
         reproductionTime += Time.deltaTime;
 
+        CarnivoreSpawner.carnivorePoints += Time.deltaTime * 0.3f;
 
         if (hunger >= hungerThreshold)
         {
@@ -78,8 +77,6 @@ public class Carnivore : MonoBehaviour
         if (lifeSpan >= lifeExpect || hunger >= 100f)
         {
             Destroy(gameObject);
-            CarnivoreSpawner.carnivorePopulation--;
-            //Debug.Log("carnivore died. new population: " + CarnivoreSpawner.carnivorePopulation);
         }
 
 
@@ -98,13 +95,8 @@ public class Carnivore : MonoBehaviour
 
         if (adult == true && hungry == false && reproductionTime >= 17)
         {
-            offSpringRate = Random.Range(1, 3);
-
-            for (int i = 0; i < offSpringRate; i++)
-            {
-                Invoke("SpawnBaby", 0f);
-                reproductionTime = 0f;
-            }
+            baby = true;
+            reproductionTime = 0f;
         }
         else
         {
@@ -146,9 +138,6 @@ public class Carnivore : MonoBehaviour
                 Destroy(other.gameObject);
                 hunger = 0;
 
-                HerbivoreSpawner.herbivorePopulation--;
-                //Debug.Log("herbivore died. new population: " + HerbivoreSpawner.herbivorePopulation);
-
                 if (maxLifeExpect < 200)
                 {
                     lifeExpect += 10f;
@@ -157,14 +146,4 @@ public class Carnivore : MonoBehaviour
         }
     }
 
-    public void SpawnBaby()
-    {
-        Vector3 position = new Vector3(transform.position.x, 0, transform.position.z);
-        Vector3 rotation = new Vector3(0, Random.Range(0f, 360f), 0);
-
-        GameObject baby = Instantiate(objectToBeSpawned, position, Quaternion.Euler(rotation));
-        baby.GetComponent<Carnivore>().adult = false;
-        baby.GetComponent<Carnivore>().lifeSpan = 0;
-
-    }
 }
