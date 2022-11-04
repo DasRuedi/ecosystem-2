@@ -35,7 +35,7 @@ public class Carnivore : MonoBehaviour
         hunger += Time.deltaTime * 1.5f;
         reproductionTime += Time.deltaTime;
 
-        CarnivoreSpawner.carnivorePoints += Time.deltaTime * 0.3f;
+        Healthbar.naturePoints += Time.deltaTime * 0.3f;
 
         if (hunger >= hungerThreshold)
         {

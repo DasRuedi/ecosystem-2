@@ -12,11 +12,9 @@ public class HerbivoreSpawner : MonoBehaviour
 
     public float time = 0;
     public float spawnRate = 5;
-    public static int herbivoreStartPopulation = 5;
-    public int currHerbivorePopulation;
+    public static int herbivoreStartPopulation = 10;
+    public static int currHerbivorePopulation;
     public float existenceTime = 0;
-    public static float herbivorePoints = 0f;
-    public float checkPoint;
 
     public bool extinct = false;
 
@@ -34,7 +32,6 @@ public class HerbivoreSpawner : MonoBehaviour
     void Update()
     {
         time += Time.deltaTime;
-        checkPoint += Time.deltaTime;
 
 
         aliveHerbivore = GameObject.FindGameObjectsWithTag("Herbivore");
@@ -69,11 +66,6 @@ public class HerbivoreSpawner : MonoBehaviour
             extinct = true;
         }
 
-        if (checkPoint >= 10)
-        {
-            Debug.Log(herbivorePoints + " herbivore Points from " + currHerbivorePopulation + " Herbivores at " + time + " Seconds");
-            checkPoint = 0;
-        }
 
     }
 

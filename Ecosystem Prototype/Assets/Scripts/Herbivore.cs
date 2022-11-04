@@ -40,7 +40,7 @@ public class Herbivore : MonoBehaviour
         hunger += Time.deltaTime * 3f;
         reproductionTime += Time.deltaTime;
 
-        HerbivoreSpawner.herbivorePoints += Time.deltaTime * 0.1f;
+        Healthbar.naturePoints += Time.deltaTime * 0.1f;
 
 
         if (hunger >= hungerThreshold)

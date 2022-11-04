@@ -10,9 +10,10 @@ public class PlantSpawner : MonoBehaviour
     [SerializeField] Transform parent;
 
     public float time = 0;
-    public static int plantPopulation = 10;
+    public static int plantPopulation = 50;
     public float spawnRate = 3;
     public float existenceTime = 0;
+
 
     public bool extinct = false;
 
@@ -32,39 +33,28 @@ public class PlantSpawner : MonoBehaviour
         time += Time.deltaTime;
 
 
+
         if (plantPopulation >= 1)
         {
-            /*
-
-            if (time >= spawnRate)
+            if (Healthbar.naturePoints >= 10)
             {
-
-                for (int i = 0; i < offspringRate; i++)
+                if (Input.GetKeyDown("space"))
                 {
-                    Vector3 position = new Vector3(Random.Range(-50f, 50f), 0, Random.Range(-50f, 50f));
-                    Vector3 rotation = new Vector3(0, Random.Range(0f, 360f), 0);
+                    for (int i = 0; i < offspringRate; i++)
+                    {
+                        Vector3 position = new Vector3(Random.Range(-50f, 50f), 0, Random.Range(-50f, 50f));
+                        Vector3 rotation = new Vector3(0, Random.Range(0f, 360f), 0);
 
-                    Instantiate(objectToBeSpawned, position, Quaternion.Euler(rotation), parent);
+                        Instantiate(objectToBeSpawned, position, Quaternion.Euler(rotation), parent);
+                        Debug.Log("Plant spawned for 10 nature Points");
+                        Healthbar.naturePoints -= 10f;
+                    }
+
                 }
-
-                plantPopulation += offspringRate;
-
-                time = 0;
             }
-            */
 
-            if (Input.GetKeyDown("space"))
-            {
-                for (int i = 0; i < offspringRate; i++)
-                {
-                    Vector3 position = new Vector3(Random.Range(-50f, 50f), 0, Random.Range(-50f, 50f));
-                    Vector3 rotation = new Vector3(0, Random.Range(0f, 360f), 0);
 
-                    Instantiate(objectToBeSpawned, position, Quaternion.Euler(rotation), parent);
-                }
-
-                plantPopulation += offspringRate;
-            }
+            
         }
 
         if (plantPopulation > 0)
@@ -76,6 +66,8 @@ public class PlantSpawner : MonoBehaviour
             Debug.Log("Plants went extinct after " + existenceTime + "Seconds");
             extinct = true;
         }
+
+        
 
     }
 

@@ -12,11 +12,9 @@ public class CarnivoreSpawner : MonoBehaviour
 
     public float time = 0;
     public float spawnRate = 8;
-    public static int carnivoreStartPopulation = 1;
-    public int currCarnivorePopulation;
+    public static int carnivoreStartPopulation = 3;
+    public static int currCarnivorePopulation;
     public float existenceTime = 0;
-    public static float carnivorePoints = 0f;
-    public float checkPoint;
 
     public bool extinct = false;
 
@@ -34,7 +32,6 @@ public class CarnivoreSpawner : MonoBehaviour
     void Update()
     {
         time += Time.deltaTime;
-        checkPoint += Time.deltaTime;
 
         aliveCarnivore = GameObject.FindGameObjectsWithTag("Carnivore");
         currCarnivorePopulation = aliveCarnivore.Length;
@@ -67,11 +64,6 @@ public class CarnivoreSpawner : MonoBehaviour
             extinct = true;
         }
 
-        if (checkPoint >= 10)
-        {
-            Debug.Log(carnivorePoints + " Carnivore Points from " + currCarnivorePopulation + " Carnivores at " + time + " Seconds");
-            checkPoint = 0;
-        }
     }
 
 }
