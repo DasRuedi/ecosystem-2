@@ -6,7 +6,7 @@ using UnityEngine.UI;
 public class Healthbar : MonoBehaviour
 {
     private Image HealthBar;
-    public static float naturePoints = 0f;
+    public static float naturePoints = 100f;
     public float maxNaturePoints = 300f;
     public float checkPoint;
     public float time = 0;
@@ -36,7 +36,7 @@ public class Healthbar : MonoBehaviour
 
         if (checkPoint >= 10)
         {
-            Debug.Log(roundNaturePoints + " Nature Points from " + (HerbivoreSpawner.currHerbivorePopulation + CarnivoreSpawner.currCarnivorePopulation) + " Animals at " + time + " Seconds");
+            Debug.Log(roundNaturePoints + " Nature Points from " + (Spawner.currHerbivorePopulation + Spawner.currCarnivorePopulation) + " Animals at " + time + " Seconds");
             checkPoint = 0;
         }
 

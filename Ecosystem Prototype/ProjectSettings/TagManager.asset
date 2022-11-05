@@ -7,6 +7,15 @@ TagManager:
   - Carnivore
   - Plant
   - Herbivore
+  - Apex
+  - bird
+  - raptor
+  - tall herbivore
+  - small herbivore
+  - bush
+  - tree
+  - berry
+  - leaves
   layers:
   - Default
   - TransparentFX

@@ -2,17 +2,18 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public class Carnivore : MonoBehaviour
+public class SmallHerbivore : MonoBehaviour
 {
-    public float lifeExpect = 65;
-    public float maxLifeExpect = 150;
+    public float lifeExpect = 50;
+    public float maxLifeExpect = 80;
     public float lifeSpan = 0;
-    public float hunger = 0f;
-    public float moveSpeed = 1.2f;
+    public float hunger = 0;
+    public float hungerThreshold = 10;
+    public float starveThreshold = 100;
+    public float moveSpeed = 3f;
     public float currMoveSpeed;
     public float reorientationTime = 0;
-    public float hungerThreshold = 20;
-    public float starveThreshold = 100;
+
 
     public GameObject CurrentTarget = null;
 
@@ -20,19 +21,13 @@ public class Carnivore : MonoBehaviour
 
 
 
-    void Start()
-    {
-
-    }
-
-    
     void Update()
     {
         lifeSpan += Time.deltaTime;
         reorientationTime += Time.deltaTime;
-        hunger += Time.deltaTime * 1.5f;
+        hunger += Time.deltaTime * 3f;
 
-        Healthbar.naturePoints += Time.deltaTime * 0.3f;
+        Healthbar.naturePoints += Time.deltaTime * 0.01f;
 
         currMoveSpeed = moveSpeed;
 
@@ -42,27 +37,26 @@ public class Carnivore : MonoBehaviour
 
             if (CurrentTarget != null)
             {
-                currMoveSpeed = 4;
-                transform.position = Vector3.MoveTowards(transform.position, CurrentTarget.transform.position, currMoveSpeed * Time.deltaTime);
+                currMoveSpeed = 10f;
+                transform.position = Vector3.MoveTowards(transform.position, CurrentTarget.transform.position, moveSpeed * Time.deltaTime);
             }
             else
             {
-                currMoveSpeed = 3;
-                transform.Translate(0, 0, currMoveSpeed * Time.deltaTime);
+                currMoveSpeed = 7f;
+                transform.Translate(0, 0, moveSpeed * Time.deltaTime);
 
-                if (reorientationTime >= 7)
+                if (reorientationTime >= 5)
                 {
                     transform.rotation = Quaternion.Euler(0, Random.Range(0f, 360f), 0);
                     reorientationTime = 0;
                 }
             }
-            
         }
-        
-        if(hunger < hungerThreshold)
+
+        if (hunger < hungerThreshold)
         {
             hungry = false;
-            transform.Translate(0, 0, currMoveSpeed * Time.deltaTime);
+            transform.Translate(0, 0, moveSpeed * Time.deltaTime);
 
 
             if (reorientationTime >= 2)
@@ -73,14 +67,10 @@ public class Carnivore : MonoBehaviour
         }
 
 
-
-
-        if (lifeSpan >= lifeExpect || hunger >= 100f)
+        if (lifeSpan >= lifeExpect || hunger >= starveThreshold)
         {
             Destroy(gameObject);
         }
-
-
 
 
         if (CurrentTarget == null)
@@ -89,9 +79,10 @@ public class Carnivore : MonoBehaviour
         }
     }
 
-    private void OnTriggerStay(Collider collision)
+
+    void OnTriggerStay(Collider collision)
     {
-        if (collision.TryGetComponent<Herbivore>(out Herbivore herbivore) || collision.TryGetComponent<SmallHerbivore>(out SmallHerbivore smallHerbivore))
+        if (collision.TryGetComponent<GrassPatches>(out GrassPatches plant))
         {
             if (CurrentTarget == null)
             {
@@ -103,30 +94,31 @@ public class Carnivore : MonoBehaviour
 
     void OnTriggerExit(Collider collision)
     {
-        if (collision.TryGetComponent<Herbivore>(out Herbivore herbivore) || collision.TryGetComponent<SmallHerbivore>(out SmallHerbivore smallHerbivore))
+        if (collision.TryGetComponent<GrassPatches>(out GrassPatches plant))
         {
             if (CurrentTarget == collision.gameObject)
             {
                 CurrentTarget = null;
             }
-        } 
+        }
     }
 
     void OnCollisionEnter(Collision other)
     {
-        if (other.gameObject.CompareTag("Herbivore") || other.gameObject.CompareTag("small herbivore"))
+        if (other.gameObject.CompareTag("Plant"))
         {
             if (hungry == true)
             {
                 Destroy(other.gameObject);
                 hunger = 0;
+                hungry = false;
 
-                if (lifeExpect < maxLifeExpect)
+                if (lifeExpect <= maxLifeExpect)
                 {
-                    lifeExpect += 5f;
+                    lifeExpect += 3f;
                 }
+
             }
         }
     }
-
 }

@@ -4,7 +4,7 @@ using UnityEngine;
 
 public class Herbivore : MonoBehaviour
 {
-    public float lifeExpect = 60;
+    public float lifeExpect = 80;
     public float maxLifeExpect = 200;
     public float lifeSpan = 0;
     public float hunger = 0;
@@ -12,25 +12,12 @@ public class Herbivore : MonoBehaviour
     public float starveThreshold = 100;
     public float moveSpeed = 1f;
     public float reorientationTime = 0;
-    public float reproductionTime = 0;
 
 
     public GameObject CurrentTarget = null;
 
     public bool hungry = false;
-    public bool adult = false;
-    public static bool baby = false;
 
-
-    void Awake()
-    {
-        
-    }
-
-    void Start()
-    {
-
-    }
 
 
     void Update()
@@ -38,7 +25,6 @@ public class Herbivore : MonoBehaviour
         lifeSpan += Time.deltaTime;
         reorientationTime += Time.deltaTime;
         hunger += Time.deltaTime * 3f;
-        reproductionTime += Time.deltaTime;
 
         Healthbar.naturePoints += Time.deltaTime * 0.1f;
 
@@ -53,7 +39,7 @@ public class Herbivore : MonoBehaviour
             }
             else
             {
-                transform.Translate(0, 0, -moveSpeed * Time.deltaTime);
+                transform.Translate(0, 0, moveSpeed * Time.deltaTime);
 
                 if (reorientationTime >= 5)
                 {
@@ -66,7 +52,7 @@ public class Herbivore : MonoBehaviour
         if (hunger < hungerThreshold)
         {
             hungry = false;
-            transform.Translate(0, 0, -moveSpeed * Time.deltaTime);
+            transform.Translate(0, 0, moveSpeed * Time.deltaTime);
 
 
             if (reorientationTime >= 2)
@@ -87,30 +73,12 @@ public class Herbivore : MonoBehaviour
         {
             return;
         }
-
-        if (reproductionTime >= 30)
-        {
-            adult = true;
-        }
-
-        if (adult == true && hungry == false && reproductionTime >= 23)
-        {
-            baby = true;
-            reproductionTime = 0f;
-        }
-        else
-        {
-            return;
-        }
-
-
-        
     }
 
 
     void OnTriggerStay(Collider collision)
     {
-        if (collision.TryGetComponent<Plants>(out Plants plant))
+        if (collision.TryGetComponent<GrassPatches>(out GrassPatches plant))
         {
             if (CurrentTarget == null)
             {
@@ -122,7 +90,7 @@ public class Herbivore : MonoBehaviour
 
     void OnTriggerExit(Collider collision)
     {
-        if (collision.TryGetComponent<Plants>(out Plants plant))
+        if (collision.TryGetComponent<GrassPatches>(out GrassPatches plant))
         {
             if (CurrentTarget == collision.gameObject)
             {
@@ -141,13 +109,11 @@ public class Herbivore : MonoBehaviour
                 hunger = 0;
                 hungry = false;
 
-                PlantSpawner.plantPopulation--;
-                if (maxLifeExpect < 200)
+                if (lifeExpect <= maxLifeExpect)
                 {
                     lifeExpect += 10f;
                 }
                 
-                //Debug.Log("Plant died. new population: " + PlantSpawner.plantPopulation);
             }
         }
     }
