@@ -396,7 +396,7 @@ public class Spawner : MonoBehaviour
         {
             if (currTreePopulation >= 1)
             {
-                if (currBirdPopulation >= 15 || currHerbivorePopulation >= 10 || currSmallHerbivorePopulation >= 20)
+                if (currBirdPopulation >= 10 || currHerbivorePopulation >= 7 || currSmallHerbivorePopulation >= 15)
                 {
                     raptorOffSpring = 1;
 
@@ -498,7 +498,7 @@ public class Spawner : MonoBehaviour
     {
         if (apexInit == false)
         {
-            if (currGroundAnimalPopulation >= 15)
+            if (currGroundAnimalPopulation >= 25)
             {
                 apexOffSpring = 1;
 
