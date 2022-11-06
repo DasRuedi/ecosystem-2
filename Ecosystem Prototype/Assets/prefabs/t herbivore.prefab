@@ -63,17 +63,15 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   lifeExpect: 200
-  maxLifeExpect: 350
+  maxLifeExpect: 600
   lifeSpan: 0
   hunger: 0
   hungerThreshold: 30
   starveThreshold: 200
   moveSpeed: 1
   reorientationTime: 0
-  reproductionTime: 0
   CurrentTarget: {fileID: 0}
   hungry: 0
-  adult: 0
 --- !u!54 &327661993676969150
 Rigidbody:
   m_ObjectHideFlags: 0
@@ -298,7 +296,7 @@ GameObject:
   - component: {fileID: 611402662136778861}
   m_Layer: 0
   m_Name: collider
-  m_TagString: tall herbivore
+  m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0

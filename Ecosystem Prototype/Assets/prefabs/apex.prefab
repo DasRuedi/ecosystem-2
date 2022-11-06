@@ -78,6 +78,17 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 9fd16b16887eefb4abf10db0d50d3d44, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  lifeExpect: 40
+  maxLifeExpect: 400
+  lifeSpan: 0
+  hunger: 0
+  moveSpeed: 1
+  currMoveSpeed: 0
+  reorientationTime: 0
+  hungerThreshold: 10
+  starveThreshold: 50
+  CurrentTarget: {fileID: 0}
+  hungry: 0
 --- !u!1 &3543954242246678326
 GameObject:
   m_ObjectHideFlags: 0

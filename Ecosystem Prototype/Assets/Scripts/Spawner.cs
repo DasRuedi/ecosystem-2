@@ -6,9 +6,7 @@ public class Spawner : MonoBehaviour
 {
     public float time = 0;
 
-    [SerializeField] private GameObject grassSpawn;
-    [SerializeField] private GameObject bushSpawn;
-    [SerializeField] private GameObject treeSpawn;
+
     [SerializeField] private GameObject herbivoreSpawn;
     [SerializeField] private GameObject carnivoreSpawn;
     [SerializeField] private GameObject birdSpawn;
@@ -17,9 +15,7 @@ public class Spawner : MonoBehaviour
     [SerializeField] private GameObject smallHerbivoreSpawn;
     [SerializeField] private GameObject apexSpawn;
 
-    [SerializeField] Transform grassParent;
-    [SerializeField] Transform bushParent;
-    [SerializeField] Transform treeParent;
+
     [SerializeField] Transform herbivoreParent;
     [SerializeField] Transform carnivoreParent;
     [SerializeField] Transform birdParent;
@@ -28,9 +24,7 @@ public class Spawner : MonoBehaviour
     [SerializeField] Transform smallHerbivoreParent;
     [SerializeField] Transform apexParent;
 
-    public GameObject[] aliveGrass;
-    public GameObject[] aliveBush;
-    public GameObject[] aliveTree;
+
     public GameObject[] aliveHerbivore;
     public GameObject[] aliveCarnivore;
     public GameObject[] aliveBird;
@@ -40,9 +34,7 @@ public class Spawner : MonoBehaviour
     public GameObject[] aliveApex;
 
 
-    public int grassOffSpring = 3;
-    public int bushOffSpring = 1;
-    public int treeOffSpring = 1;
+
     public int herbivoreOffSpring;
     public int carnivoreOffSpring;
     public int birdOffSpring;
@@ -51,9 +43,7 @@ public class Spawner : MonoBehaviour
     public int smallHerbivoreOffSpring;
     public int apexOffSpring;
 
-    public static int currGrassPopulation;
-    public static int currBushPopulation;
-    public static int currTreePopulation;
+
     public static int currHerbivorePopulation;
     public static int currCarnivorePopulation;
     public static int currBirdPopulation;
@@ -102,11 +92,7 @@ public class Spawner : MonoBehaviour
         populationCheck();
 
 
-        Grass();
 
-        Bush();
-
-        Tree();
 
 
         HerbivoresInit();
@@ -132,74 +118,13 @@ public class Spawner : MonoBehaviour
     }
 
 
-    public void Grass()
-    {
-        if (Healthbar.naturePoints >= 10)
-        {
-            if (Input.GetKeyDown("1"))
-            {
-                for (int i = 0; i < grassOffSpring; i++)
-                {
-                    Vector3 position = new Vector3(Random.Range(-50f, 50f), 0, Random.Range(-50f, 50f));
-                    Vector3 rotation = new Vector3(0, Random.Range(0f, 360f), 0);
-
-                    Instantiate(grassSpawn, position, Quaternion.Euler(rotation), grassParent);
-
-                }
-                Debug.Log(grassOffSpring + " patches of Grass spawned for 10 nature Points");
-                Healthbar.naturePoints -= 10f;
-            }
-        }
-
-    }
-
-    public void Bush()
-    {
-        if (Healthbar.naturePoints >= 20)
-        {
-            if (Input.GetKeyDown("2"))
-            {
-                for (int i = 0; i < bushOffSpring; i++)
-                {
-                    Vector3 position = new Vector3(Random.Range(-50f, 50f), 0, Random.Range(-50f, 50f));
-                    Vector3 rotation = new Vector3(0, Random.Range(0f, 360f), 0);
-
-                    Instantiate(bushSpawn, position, Quaternion.Euler(rotation), bushParent);
-
-                }
-                Debug.Log(bushOffSpring + " bushe spawned for 20 nature Points");
-                Healthbar.naturePoints -= 20f;
-            }
-        }
-
-    }
-
-    public void Tree()
-    {
-        if (Healthbar.naturePoints >= 30)
-        {
-            if (Input.GetKeyDown("3"))
-            {
-                for (int i = 0; i < treeOffSpring; i++)
-                {
-                    Vector3 position = new Vector3(Random.Range(-50f, 50f), 0, Random.Range(-50f, 50f));
-                    Vector3 rotation = new Vector3(0, Random.Range(0f, 360f), 0);
-
-                    Instantiate(treeSpawn, position, Quaternion.Euler(rotation), treeParent);
-
-                }
-                Debug.Log(treeOffSpring + " Tree spawned for 20 nature Points");
-                Healthbar.naturePoints -= 30f;
-            }
-        }
-
-    }
+    
 
     public void HerbivoresInit()
     {
         if (herbivoreInit == false)
         {
-            if (currGrassPopulation >= 15)
+            if (PlantSpawner.currGrassPopulation >= 15)
             {
                 herbivoreOffSpring = 3;
 
@@ -222,7 +147,7 @@ public class Spawner : MonoBehaviour
     {
         if (herbivoreInit == true)
         {
-            if (currHerbivorePopulation >= 1 && currHerbivorePopulation <= 30)
+            if (currHerbivorePopulation >= 1 && currHerbivorePopulation <= 30 && PlantSpawner.currGrassPopulation >= 5)
             {
                 if (herbivoreReproductionTime >= 23f)
                 {
@@ -271,20 +196,23 @@ public class Spawner : MonoBehaviour
         {
             if (currCarnivorePopulation >= 1 && currCarnivorePopulation <= 15)
             {
-                if (carnivoreReproductionTime >= 37f)
+                if (currHerbivorePopulation >= 3 || currSmallHerbivorePopulation >= 15)
                 {
-                    carnivoreOffSpring = Random.Range(1, 2);
-
-                    for (int i = 0; i < carnivoreOffSpring; i++)
+                    if (carnivoreReproductionTime >= 37f)
                     {
-                        Vector3 position = new Vector3(Random.Range(-50f, 50f), 0, Random.Range(-50f, 50f));
-                        Vector3 rotation = new Vector3(0, 0, 0);
+                        carnivoreOffSpring = Random.Range(1, 2);
 
-                        Instantiate(carnivoreSpawn, position, Quaternion.Euler(rotation), carnivoreParent);
-                        Debug.Log(carnivoreOffSpring + " Carnivores were born");
+                        for (int i = 0; i < carnivoreOffSpring; i++)
+                        {
+                            Vector3 position = new Vector3(Random.Range(-50f, 50f), 0, Random.Range(-50f, 50f));
+                            Vector3 rotation = new Vector3(0, 0, 0);
+
+                            Instantiate(carnivoreSpawn, position, Quaternion.Euler(rotation), carnivoreParent);
+                            Debug.Log(carnivoreOffSpring + " Carnivores were born");
+                        }
+
+                        carnivoreReproductionTime = 0f;
                     }
-
-                    carnivoreReproductionTime = 0f;
                 }
             }
         }
@@ -294,7 +222,7 @@ public class Spawner : MonoBehaviour
     {
         if (birdInit == false)
         {
-            if (currBushPopulation >= 3 && currTreePopulation >= 1)
+            if (PlantSpawner.currBushPopulation >= 3 && PlantSpawner.currTreePopulation >= 1)
             {
                 birdOffSpring = 5;
 
@@ -316,7 +244,7 @@ public class Spawner : MonoBehaviour
     {
         if (birdInit == true)
         {
-            if (currBirdPopulation >= 1 && currBirdPopulation <= 40)
+            if (currBirdPopulation >= 1 && currBirdPopulation <= 40 && PlantSpawner.currBushPopulation >= 1 && PlantSpawner.currTreePopulation >= 1)
             {
                 if (birdReproductionTime >= 17f)
                 {
@@ -344,7 +272,7 @@ public class Spawner : MonoBehaviour
     {
         if (tallHerbivoreInit == false)
         {
-            if (currTreePopulation >= 5 && currApexPopulation <= 0)
+            if (PlantSpawner.currTreePopulation >= 5 && currApexPopulation <= 0)
             {
                 tallHerbivoreOffSpring = 1;
 
@@ -366,9 +294,9 @@ public class Spawner : MonoBehaviour
     {
         if (tallHerbivoreInit == true)
         {
-            if (currTallHerbivorePopulation >= 1 && currTallHerbivorePopulation  <= 12 && currApexPopulation <= 0)
+            if (currTallHerbivorePopulation >= 1 && currTallHerbivorePopulation <= 12 && currApexPopulation <= 0 && PlantSpawner.currTreePopulation >= 5)
             {
-                if (tallHerbivoreReproductionTime == 51)
+                if (tallHerbivoreReproductionTime >= 51f)
                 {
                     tallHerbivoreOffSpring = Random.Range(1, 2);
 
@@ -394,7 +322,7 @@ public class Spawner : MonoBehaviour
     {
         if (raptorInit == false)
         {
-            if (currTreePopulation >= 1)
+            if (PlantSpawner.currTreePopulation >= 1)
             {
                 if (currBirdPopulation >= 10 || currHerbivorePopulation >= 7 || currSmallHerbivorePopulation >= 15)
                 {
@@ -419,7 +347,7 @@ public class Spawner : MonoBehaviour
     {
         if (raptorInit == true)
         {
-            if (currRaptorPopulation >= 1 && currRaptorPopulation <= 13)
+            if (currRaptorPopulation >= 1 && currRaptorPopulation <= 13 && PlantSpawner.currTreePopulation >= 1)
             {
                 if (raptorReproductionTime >= 31)
                 {
@@ -448,7 +376,7 @@ public class Spawner : MonoBehaviour
     {
         if (smallHerbivoreInit == false)
         {
-            if (currGrassPopulation >= 10 && currBushPopulation >= 3)
+            if (PlantSpawner.currGrassPopulation >= 10 && PlantSpawner.currBushPopulation >= 3)
             {
                 smallHerbivoreOffSpring = 5;
 
@@ -470,7 +398,7 @@ public class Spawner : MonoBehaviour
     {
         if (smallHerbivoreInit == true)
         {
-            if (currSmallHerbivorePopulation >= 1 && currSmallHerbivorePopulation <= 50)
+            if (currSmallHerbivorePopulation >= 1 && currSmallHerbivorePopulation <= 50 && PlantSpawner.currGrassPopulation >= 5 && PlantSpawner.currBushPopulation >= 3)
             {
                 if (smallHerbivoreReproductionTime == 11)
                 {
@@ -521,7 +449,7 @@ public class Spawner : MonoBehaviour
     {
         if (apexInit == true)
         {
-            if (currApexPopulation >= 1 && currApexPopulation <= 3)
+            if (currApexPopulation >= 1 && currApexPopulation <= 3 && currGroundAnimalPopulation >= 35)
             {
                 if (apexReproductionTime >= 52)
                 {
@@ -547,14 +475,7 @@ public class Spawner : MonoBehaviour
 
     public void populationCheck()
     {
-        aliveGrass = GameObject.FindGameObjectsWithTag("Plant");
-        currGrassPopulation = aliveGrass.Length;
 
-        aliveBush = GameObject.FindGameObjectsWithTag("bush");
-        currBushPopulation = aliveBush.Length;
-
-        aliveTree = GameObject.FindGameObjectsWithTag("tree");
-        currTreePopulation = aliveTree.Length;
 
         aliveHerbivore = GameObject.FindGameObjectsWithTag("Herbivore");
         currHerbivorePopulation = aliveHerbivore.Length;

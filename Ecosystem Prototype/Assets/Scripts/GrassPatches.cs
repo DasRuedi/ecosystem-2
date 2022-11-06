@@ -4,15 +4,45 @@ using UnityEngine;
 
 public class GrassPatches : MonoBehaviour
 {
-    // Start is called before the first frame update
+    public float witherTime = 0;
+    public float witherLimit = 100;
+    public bool withering = false;
+
     void Start()
     {
         
     }
 
-    // Update is called once per frame
+    
     void Update()
     {
-        
+        if (Ground.stone == true)
+        {
+            witherTime += Time.deltaTime;
+
+            if (withering == false)
+            {
+                witherLimit = Random.Range(10, 90);
+                withering = true;
+            }
+        }
+
+        if (Ground.stone == false)
+        {
+            witherTime = 0;
+
+            if (withering == true)
+            {
+                withering = false;
+            }
+        }
+
+
+
+        if (witherTime >= witherLimit)
+        {
+            Destroy(gameObject);
+            Debug.Log("tree died");
+        }
     }
 }

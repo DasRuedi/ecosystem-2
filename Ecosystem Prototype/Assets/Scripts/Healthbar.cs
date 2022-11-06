@@ -6,7 +6,7 @@ using UnityEngine.UI;
 public class Healthbar : MonoBehaviour
 {
     private Image HealthBar;
-    public static float naturePoints = 100f;
+    public static float naturePoints = 300f;
     public float maxNaturePoints = 300f;
     public float checkPoint;
     public float time = 0;

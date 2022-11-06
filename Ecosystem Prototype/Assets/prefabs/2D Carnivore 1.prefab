@@ -79,18 +79,16 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   lifeExpect: 65
-  maxLifeExpect: 150
+  maxLifeExpect: 200
   lifeSpan: 0
   hunger: 0
   moveSpeed: 1.2
   currMoveSpeed: 0
   reorientationTime: 0
-  reproductionTime: 0
   hungerThreshold: 30
   starveThreshold: 100
   CurrentTarget: {fileID: 0}
   hungry: 0
-  adult: 0
 --- !u!1 &3543954242246678326
 GameObject:
   m_ObjectHideFlags: 0

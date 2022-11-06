@@ -16,6 +16,12 @@ TagManager:
   - tree
   - berry
   - leaves
+  - Cactus
+  - cactusfruit
+  - CactusTree
+  - Cactus Flower
+  - Moss
+  - MossLump
   layers:
   - Default
   - TransparentFX
