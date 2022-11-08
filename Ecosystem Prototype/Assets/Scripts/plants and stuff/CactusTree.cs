@@ -5,7 +5,7 @@ using UnityEngine;
 public class CactusTree : MonoBehaviour
 {
     public float flowerSpawnTime = 0;
-    public float flowerSpawnRate = 5;
+    public float flowerSpawnRate = 90;
 
     [SerializeField] private GameObject flowerSpawn;
 
@@ -21,6 +21,11 @@ public class CactusTree : MonoBehaviour
     public float witherTime = 0;
     public float witherLimit = 100;
     public bool withering = false;
+
+    private void Start()
+    {
+        flowerSpawnRate = Random.Range(90, 300);
+    }
 
     void Update()
     {
@@ -62,7 +67,7 @@ public class CactusTree : MonoBehaviour
 
                 if (flowerSpawnTime >= flowerSpawnRate)
                 {
-                    flowerSpawnTime = Random.Range(90, 300);
+                    flowerSpawnRate = Random.Range(90, 300);
 
                     for (int i = 0; i < flowerOffSpring; i++)
                     {

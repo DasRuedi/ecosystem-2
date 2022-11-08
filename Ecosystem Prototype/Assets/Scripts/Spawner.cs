@@ -14,6 +14,9 @@ public class Spawner : MonoBehaviour
     [SerializeField] private GameObject raptorSpawn;
     [SerializeField] private GameObject smallHerbivoreSpawn;
     [SerializeField] private GameObject apexSpawn;
+    [SerializeField] private GameObject runningBirdSpawn;
+    [SerializeField] private GameObject hugeHerbivoreSpawn;
+    [SerializeField] private GameObject butterflySpawn;
 
 
     [SerializeField] Transform herbivoreParent;
@@ -23,6 +26,9 @@ public class Spawner : MonoBehaviour
     [SerializeField] Transform raptorParent;
     [SerializeField] Transform smallHerbivoreParent;
     [SerializeField] Transform apexParent;
+    [SerializeField] Transform runningBirdParent;
+    [SerializeField] Transform hugeHerbivoreParent;
+    [SerializeField] Transform butterflyParent;
 
 
     public GameObject[] aliveHerbivore;
@@ -32,6 +38,9 @@ public class Spawner : MonoBehaviour
     public GameObject[] aliveRaptor;
     public GameObject[] aliveSmallHerbivore;
     public GameObject[] aliveApex;
+    public GameObject[] aliveRunningBird;
+    public GameObject[] aliveHugeHerbivore;
+    public GameObject[] aliveButterfly;
 
 
 
@@ -42,6 +51,9 @@ public class Spawner : MonoBehaviour
     public int raptorOffSpring;
     public int smallHerbivoreOffSpring;
     public int apexOffSpring;
+    public int runningBirdOffSpring;
+    public int hugeHerbivoreOffSpring;
+    public int butterflyOffSpring;
 
 
     public static int currHerbivorePopulation;
@@ -52,6 +64,9 @@ public class Spawner : MonoBehaviour
     public static int currSmallHerbivorePopulation;
     public static int currApexPopulation;
     public static int currGroundAnimalPopulation;
+    public static int currRunningBirdPopulation;
+    public static int currHugeHerbivorePopulation;
+    public static int currButterflyPopulation;
 
     public float herbivoreSpawnRate;
     public float carnivoreSpawnRate;
@@ -60,6 +75,9 @@ public class Spawner : MonoBehaviour
     public float raptorSpawnRate;
     public float smallHerbivoreSpawnRate;
     public float apexSpawnRate;
+    public float runningBirdSpawnRate;
+    public float hugeHerbivoreSpawnRate;
+    public float butterflySpawnRate;
 
     public float herbivoreReproductionTime;
     public float carnivoreReproductionTime;
@@ -68,6 +86,9 @@ public class Spawner : MonoBehaviour
     public float raptorReproductionTime;
     public float smallHerbivoreReproductionTime;
     public float apexReproductionTime;
+    public float runningBirdReproductionTime;
+    public float hugeHerbivoreReproductionTime;
+    public float butterflyReproductionTime;
 
     public bool herbivoreInit = false;
     public bool carnivoreInit = false;
@@ -76,6 +97,9 @@ public class Spawner : MonoBehaviour
     public bool raptorInit = false; 
     public bool smallHerbivoreInit = false;
     public bool apexInit = false;
+    public bool runningBirdInit = false;
+    public bool hugeHerbivoreInit = false;
+    public bool butterflyInit = false;
 
 
     void Start()
@@ -115,6 +139,15 @@ public class Spawner : MonoBehaviour
 
         ApexesInit();
         Apexes();
+
+        RunningBirdsInit();
+        RunningBirds();
+
+        HugeHerbivoresInit();
+        HugeHerbivores();
+
+        ButterfliesInit();
+        Butterflies();
     }
 
 
@@ -282,7 +315,7 @@ public class Spawner : MonoBehaviour
                     Vector3 rotation = new Vector3(0, 0, 0);
 
                     Instantiate(tallHerbivoreSpawn, position, Quaternion.Euler(rotation), tallHerbivoreParent);
-                    Debug.Log(tallHerbivoreOffSpring + " birds were born");
+                    Debug.Log(tallHerbivoreOffSpring + " tall Herbivores were born");
                 }
 
                 tallHerbivoreInit = true;
@@ -322,9 +355,9 @@ public class Spawner : MonoBehaviour
     {
         if (raptorInit == false)
         {
-            if (PlantSpawner.currTreePopulation >= 1)
+            if (PlantSpawner.currTreePopulation >= 1 || PlantSpawner.currCactusTreePopulation >= 1)
             {
-                if (currBirdPopulation >= 10 || currHerbivorePopulation >= 7 || currSmallHerbivorePopulation >= 15)
+                if (currBirdPopulation >= 12 || currHerbivorePopulation >= 9 || currSmallHerbivorePopulation >= 15 || currRunningBirdPopulation >= 13)
                 {
                     raptorOffSpring = 1;
 
@@ -347,28 +380,28 @@ public class Spawner : MonoBehaviour
     {
         if (raptorInit == true)
         {
-            if (currRaptorPopulation >= 1 && currRaptorPopulation <= 13 && PlantSpawner.currTreePopulation >= 1)
+            if (PlantSpawner.currTreePopulation >= 3 || PlantSpawner.currCactusTreePopulation >= 3)
             {
-                if (raptorReproductionTime >= 31)
+                if (currRaptorPopulation >= 1 && currRaptorPopulation <= 13)
                 {
-                    raptorOffSpring = Random.Range(1, 2);
-
-                    for (int i = 0; i < raptorOffSpring; i++)
+                    if (raptorReproductionTime >= 31)
                     {
-                        Vector3 position = new Vector3(Random.Range(-50f, 50f), Random.Range(0f, 50f), Random.Range(-50f, 50f));
-                        Vector3 rotation = new Vector3(0, 0, 0);
+                        raptorOffSpring = Random.Range(1, 2);
 
-                        Instantiate(raptorSpawn, position, Quaternion.Euler(rotation), raptorParent);
-                        Debug.Log(raptorOffSpring + " Raptors were born");
+                        for (int i = 0; i < raptorOffSpring; i++)
+                        {
+                            Vector3 position = new Vector3(Random.Range(-50f, 50f), Random.Range(0f, 50f), Random.Range(-50f, 50f));
+                            Vector3 rotation = new Vector3(0, 0, 0);
+
+                            Instantiate(raptorSpawn, position, Quaternion.Euler(rotation), raptorParent);
+                            Debug.Log(raptorOffSpring + " Raptors were born");
+                        }
+
+                        raptorReproductionTime = 0;
                     }
-
-                    raptorReproductionTime = 0;
                 }
             }
         }
-
-
-        
     }
 
 
@@ -473,6 +506,153 @@ public class Spawner : MonoBehaviour
         
     }
 
+    public void RunningBirdsInit()
+    {
+        if (runningBirdInit == false)
+        {
+            if (PlantSpawner.currCactusPopulation >= 5 && PlantSpawner.currGrassPopulation >= 3)
+            {
+                runningBirdOffSpring = 5;
+
+                for (int i = 0; i < runningBirdOffSpring; i++)
+                {
+                    Vector3 position = new Vector3(Random.Range(-50f, 50f), 0, Random.Range(-50f, 50f));
+                    Vector3 rotation = new Vector3(0, 0, 0);
+
+                    Instantiate(runningBirdSpawn, position, Quaternion.Euler(rotation), runningBirdParent);
+                    Debug.Log(runningBirdOffSpring + " running birds were born");
+                }
+
+                runningBirdInit = true;
+            }
+        }
+    }
+
+    public void RunningBirds()
+    {
+        if (runningBirdInit == true)
+        {
+            if (currRunningBirdPopulation >= 1 && currRunningBirdPopulation <= 30 && PlantSpawner.currCactusPopulation >= 1 && PlantSpawner.currGrassPopulation >= 1)
+            {
+                if (runningBirdReproductionTime >= 17f)
+                {
+                    runningBirdOffSpring = Random.Range(3, 7);
+
+                    for (int i = 0; i < runningBirdOffSpring; i++)
+                    {
+                        Vector3 position = new Vector3(Random.Range(-50f, 50f), 0, Random.Range(-50f, 50f));
+                        Vector3 rotation = new Vector3(0, 0, 0);
+
+                        Instantiate(runningBirdSpawn, position, Quaternion.Euler(rotation), runningBirdParent);
+                        Debug.Log(runningBirdOffSpring + " running Birds were born");
+                    }
+
+                    runningBirdReproductionTime = 0f;
+                }
+            }
+        }
+
+
+
+    }
+
+    public void HugeHerbivoresInit()
+    {
+        if (hugeHerbivoreInit == false)
+        {
+            if (PlantSpawner.currGrassPopulation >= 10 && PlantSpawner.currCactusPopulation >= 5)
+            {
+                hugeHerbivoreOffSpring = 1;
+
+                for (int i = 0; i < hugeHerbivoreOffSpring; i++)
+                {
+                    Vector3 position = new Vector3(Random.Range(-50f, 50f), 0, Random.Range(-50f, 50f));
+                    Vector3 rotation = new Vector3(0, 0, 0);
+
+                    Instantiate(hugeHerbivoreSpawn, position, Quaternion.Euler(rotation), hugeHerbivoreParent);
+                    Debug.Log(hugeHerbivoreOffSpring + " huge Herbivores were born");
+                }
+
+                hugeHerbivoreInit = true;
+            }
+        }
+    }
+
+    public void HugeHerbivores()
+    {
+        if (hugeHerbivoreInit == true)
+        {
+            if (currHugeHerbivorePopulation >= 1 && currHugeHerbivorePopulation <= 7 && PlantSpawner.currGrassPopulation >= 5 && PlantSpawner.currCactusPopulation >= 1)
+            {
+                if (hugeHerbivoreReproductionTime >= 43f)
+                {
+                    hugeHerbivoreOffSpring = Random.Range(1, 2);
+
+                    for (int i = 0; i < hugeHerbivoreOffSpring; i++)
+                    {
+                        Vector3 position = new Vector3(Random.Range(-50f, 50f), 0, Random.Range(-50f, 50f));
+                        Vector3 rotation = new Vector3(0, 0, 0);
+
+                        Instantiate(hugeHerbivoreSpawn, position, Quaternion.Euler(rotation), hugeHerbivoreParent);
+                        Debug.Log(hugeHerbivoreOffSpring + " huge Herbivores were born");
+                    }
+
+                    hugeHerbivoreReproductionTime = 0;
+                }
+            }
+        }
+    }
+
+    public void ButterfliesInit()
+    {
+        if (butterflyInit == false)
+        {
+            if (PlantSpawner.currCactusFlowerPopulation >= 1)
+            {
+                butterflyOffSpring = 3;
+
+                for (int i = 0; i < butterflyOffSpring; i++)
+                {
+                    Vector3 position = new Vector3(Random.Range(-50f, 50f), Random.Range(5f, 15f), Random.Range(-50f, 50f));
+                    Vector3 rotation = new Vector3(0, 0, 0);
+
+                    Instantiate(butterflySpawn, position, Quaternion.Euler(rotation), butterflyParent);
+                    Debug.Log(butterflyOffSpring + " Butterflies were born");
+                }
+
+                butterflyInit = true;
+            }
+        }
+    }
+
+    public void Butterflies()
+    {
+        if (butterflyInit == true)
+        {
+            if (PlantSpawner.currCactusFlowerPopulation >= 3)
+            {
+                if (butterflyReproductionTime >= 15)
+                {
+                    butterflyOffSpring = Random.Range(1, 10);
+
+                    for (int i = 0; i < butterflyOffSpring; i++)
+                    {
+                        Vector3 position = new Vector3(Random.Range(-50f, 50f), Random.Range(5f, 15f), Random.Range(-50f, 50f));
+                        Vector3 rotation = new Vector3(0, 0, 0);
+
+                        Instantiate(butterflySpawn, position, Quaternion.Euler(rotation), butterflyParent);
+                        Debug.Log(butterflyOffSpring + " Raptors were born");
+                    }
+
+                    butterflyReproductionTime = 0;
+                }
+            }
+        }
+
+
+
+    }
+
     public void populationCheck()
     {
 
@@ -538,7 +718,33 @@ public class Spawner : MonoBehaviour
             apexInit = false;
         }
 
-        currGroundAnimalPopulation = currHerbivorePopulation + currCarnivorePopulation + currTallHerbivorePopulation + currSmallHerbivorePopulation + currApexPopulation;
+        aliveRunningBird = GameObject.FindGameObjectsWithTag("runningBird");
+        currRunningBirdPopulation = aliveRunningBird.Length;
+
+        if (currRunningBirdPopulation <= 0 && runningBirdInit == true)
+        {
+            runningBirdInit = false;
+        }
+
+
+        aliveHugeHerbivore = GameObject.FindGameObjectsWithTag("hugeHerbivore");
+        currHugeHerbivorePopulation = aliveHugeHerbivore.Length;
+
+        if (currHugeHerbivorePopulation <= 0 && hugeHerbivoreInit == true)
+        {
+            hugeHerbivoreInit = false;
+        }
+
+
+        aliveButterfly = GameObject.FindGameObjectsWithTag("butterfly");
+        currButterflyPopulation = aliveButterfly.Length;
+
+        if (currButterflyPopulation <= 0 && butterflyInit == true)
+        {
+            butterflyInit = false;
+        }
+
+        currGroundAnimalPopulation = currHerbivorePopulation + currCarnivorePopulation + currTallHerbivorePopulation + currSmallHerbivorePopulation + currApexPopulation + currHugeHerbivorePopulation + currRunningBirdPopulation;
     }
 
 
@@ -578,6 +784,21 @@ public class Spawner : MonoBehaviour
         {
             apexReproductionTime += Time.deltaTime;
         }
-        
+
+        if (runningBirdInit == true)
+        {
+            birdReproductionTime += Time.deltaTime;
+        }
+
+        if (hugeHerbivoreInit == true)
+        {
+            tallHerbivoreReproductionTime += Time.deltaTime;
+        }
+
+        if (butterflyInit == true)
+        {
+            raptorReproductionTime += Time.deltaTime;
+        }
+
     }
 }

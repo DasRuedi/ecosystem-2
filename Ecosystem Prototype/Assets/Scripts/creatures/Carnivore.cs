@@ -91,7 +91,7 @@ public class Carnivore : MonoBehaviour
 
     private void OnTriggerStay(Collider collision)
     {
-        if (collision.TryGetComponent<Herbivore>(out Herbivore herbivore) || collision.TryGetComponent<SmallHerbivore>(out SmallHerbivore smallHerbivore))
+        if (collision.TryGetComponent<Herbivore>(out Herbivore herbivore) || collision.TryGetComponent<SmallHerbivore>(out SmallHerbivore smallHerbivore) || collision.TryGetComponent<RunningBird>(out RunningBird runningBird))
         {
             if (CurrentTarget == null)
             {
@@ -103,7 +103,7 @@ public class Carnivore : MonoBehaviour
 
     void OnTriggerExit(Collider collision)
     {
-        if (collision.TryGetComponent<Herbivore>(out Herbivore herbivore) || collision.TryGetComponent<SmallHerbivore>(out SmallHerbivore smallHerbivore))
+        if (collision.TryGetComponent<Herbivore>(out Herbivore herbivore) || collision.TryGetComponent<SmallHerbivore>(out SmallHerbivore smallHerbivore) || collision.TryGetComponent<RunningBird>(out RunningBird runningBird))
         {
             if (CurrentTarget == collision.gameObject)
             {
@@ -114,7 +114,7 @@ public class Carnivore : MonoBehaviour
 
     void OnCollisionEnter(Collision other)
     {
-        if (other.gameObject.CompareTag("Herbivore") || other.gameObject.CompareTag("small herbivore"))
+        if (other.gameObject.CompareTag("Herbivore") || other.gameObject.CompareTag("small herbivore") || other.gameObject.CompareTag("runningBird"))
         {
             if (hungry == true)
             {

@@ -5,7 +5,7 @@ using UnityEngine;
 public class TallHerbivore : MonoBehaviour
 {
     public float lifeExpect = 200;
-    public float maxLifeExpect = 350;
+    public float maxLifeExpect = 500;
     public float lifeSpan = 0;
     public float hunger = 0;
     public float hungerThreshold = 30;

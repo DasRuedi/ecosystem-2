@@ -22,6 +22,9 @@ TagManager:
   - Cactus Flower
   - Moss
   - MossLump
+  - runningBird
+  - hugeHerbivore
+  - butterfly
   layers:
   - Default
   - TransparentFX

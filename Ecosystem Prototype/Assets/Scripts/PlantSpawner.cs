@@ -25,6 +25,7 @@ public class PlantSpawner : MonoBehaviour
     public GameObject[] aliveTree;
     public GameObject[] aliveCactus;
     public GameObject[] aliveCactusTree;
+    public GameObject[] aliveCactusFlower;
     public GameObject[] aliveMoss;
 
     public int grassOffSpring;
@@ -39,6 +40,7 @@ public class PlantSpawner : MonoBehaviour
     public static int currTreePopulation;
     public static int currCactusPopulation;
     public static int currCactusTreePopulation;
+    public static int currCactusFlowerPopulation;
     public static int currMossPopulation;
 
 
@@ -264,6 +266,9 @@ public class PlantSpawner : MonoBehaviour
 
         aliveCactusTree = GameObject.FindGameObjectsWithTag("CactusTree");
         currCactusTreePopulation = aliveCactusTree.Length;
+
+        aliveCactusFlower = GameObject.FindGameObjectsWithTag("Cactus Flower");
+        currCactusFlowerPopulation = aliveCactusFlower.Length;
 
         aliveMoss = GameObject.FindGameObjectsWithTag("Moss");
         currMossPopulation = aliveMoss.Length;
